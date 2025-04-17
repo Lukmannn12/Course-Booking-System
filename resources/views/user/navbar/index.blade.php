@@ -19,7 +19,7 @@
                 class="text-sm font-semibold transition-all duration-200 hover:underline hover:underline-offset-8 {{ request()->routeIs('home') ? 'text-blue-600 underline underline-offset-8' : 'text-gray-900' }}">
                 Home
             </a>
-            <a href="#" class="text-sm font-semibold {{ request()->routeIs('product*') ? 'text-blue-600' : 'text-gray-900' }}">Form Pmesanan</a>
+            <a href="/form" class="text-sm font-semibold {{ request()->routeIs('product*') ? 'text-blue-600' : 'text-gray-900' }}">Form Pmesanan</a>
         </div>
         <div class="hidden lg:flex lg:flex-1 lg:justify-end items-center space-x-4">
     @auth

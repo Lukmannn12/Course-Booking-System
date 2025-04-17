@@ -3,6 +3,7 @@
 @section('content')
 @include('user.navbar.index')
 
+
 <div class="px-6 py-20 lg:px-8 bg-white">
     <!-- Main Hero Text -->
     <div class="mx-auto max-w-2xl py-20 sm:py-48 lg:py-56 text-center">
@@ -33,7 +34,21 @@
                 </div>
                 <span class="inline-block bg-blue-100 text-blue-700 text-xs font-semibold px-3 py-1 rounded-full">{{ $course->category }}</span>
                 <div class="pt-4">
-                    <a href="{{ route('datakursus.show', $course->id) }}" class="inline-block w-full text-center bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 text-sm font-medium transition duration-200">Detail</a>
+                    <div class="flex flex-col sm:flex-row gap-2">
+                        <a href="{{ route('datakursus.show', $course->id) }}"
+                            class="flex-1 text-center bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 text-sm font-medium transition duration-200">
+                            Detail
+                        </a>
+
+                        <form action="{{ route('enrollments.store') }}" method="POST" class="flex-1">
+                            @csrf
+                            <input type="hidden" name="course_id" value="{{ $course->id }}">
+                            <button type="submit"
+                                class="w-full bg-green-600 text-white py-2 px-4 rounded-lg hover:bg-green-700 text-sm font-medium transition duration-200">
+                                Daftar
+                            </button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
@@ -44,7 +59,7 @@
 
 <section id="testimoni" class="bg-gray-50 py-20 px-8">
     <h2 class="text-2xl font-bold mb-12 text-center text-gray-800">Apa Kata Mereka?</h2>
-    
+
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 max-w-7xl mx-auto">
         <!-- Testimoni 1 -->
         <div class="bg-white rounded-2xl shadow-md p-6 space-y-4">
@@ -83,6 +98,23 @@
         </div>
     </div>
 </section>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const alert = document.getElementById('alert');
+        if (alert) {
+            // Tampilkan alert
+            setTimeout(() => {
+                alert.classList.remove('opacity-0', 'translate-y-[-10px]');
+                alert.classList.add('opacity-100', 'translate-y-0');
+            }, 100); // Delay sedikit agar transisi smooth
 
+            // Sembunyikan alert setelah 3 detik
+            setTimeout(() => {
+                alert.classList.remove('opacity-100', 'translate-y-0');
+                alert.classList.add('opacity-0', 'translate-y-[-10px]');
+            }, 3000);
+        }
+    });
+</script>
 
 @endsection

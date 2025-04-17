@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Enrollment;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class EnrollmentController extends Controller
 {
@@ -12,7 +13,8 @@ class EnrollmentController extends Controller
      */
     public function index()
     {
-        //
+        $enrollments = Enrollment::all();
+        return view('dataenrollment.index', compact('enrollments'));
     }
 
     /**
@@ -28,7 +30,16 @@ class EnrollmentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'course_id' => 'required|exists:courses,id',
+        ]);
+
+        Enrollment::create([
+            'user_id' => Auth::id(),
+            'course_id' => $request->course_id,
+        ]);
+
+        return back();
     }
 
     /**
@@ -44,7 +55,7 @@ class EnrollmentController extends Controller
      */
     public function edit(Enrollment $enrollment)
     {
-        //
+        return view('dataenrollment.update', compact('enrollment'));
     }
 
     /**
@@ -52,7 +63,17 @@ class EnrollmentController extends Controller
      */
     public function update(Request $request, Enrollment $enrollment)
     {
-        //
+        $request->validate([
+            'status' => 'required|in:belum_dimulai,berlangsung,selesai,dibatalkan',
+            'payment_status' => 'required|in:belum_bayar,sudah_bayar',
+        ]);
+    
+        $enrollment->update([
+            'status' => $request->status,
+            'payment_status' => $request->payment_status,
+        ]);
+    
+        return redirect()->route('enrollments.index')->with('success', 'Data enrollment berhasil diperbarui.');
     }
 
     /**

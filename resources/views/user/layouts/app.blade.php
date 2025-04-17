@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -13,12 +14,11 @@
     <!-- Styles (Tailwind CSS assumed) -->
     @vite(['resources/css/app.css'])
 </head>
-<body>
-@if(session('success'))
-    <div class="bg-green-500 text-white p-4 rounded-md mb-4">
-        <strong>Success!</strong> {{ session('success') }}
-    </div>
-@endif
+
+<body class="overflow-y-scroll scrollbar-hide">
+
     @yield('content')
 </body>
+
+
 </html>

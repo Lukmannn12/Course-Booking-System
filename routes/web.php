@@ -1,12 +1,13 @@
 <?php
 
 use App\Http\Controllers\CourseController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EnrollmentController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [CourseController::class, 'welcome'])->name('home');
 
-Route::get('dashboard', [CourseController::class, 'total'])
+Route::get('dashboard', [DashboardController::class, 'index'])
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
 
@@ -14,6 +15,7 @@ Route::get('dashboard', [CourseController::class, 'total'])
     ->parameters(['datakursus' => 'course']) 
     ->middleware(['auth', 'verified']);
     
+    Route::resource('enrollments', EnrollmentController::class)->middleware(['auth', 'verified']);
 
 
 
