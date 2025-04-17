@@ -16,6 +16,21 @@ class CourseController extends Controller
         return view('datakursus.index', compact('courses'));
     }
 
+    public function welcome()
+    {
+        $courses = Course::all();
+        return view('user.kursus.listkursus', compact('courses'));
+    }
+
+    public function total()
+    {
+        // Menghitung jumlah post dan produk
+        $coursesCount = Course::count();
+
+        // Mengirimkan data jumlah post dan produk ke view
+        return view('dashboard', compact('coursesCount'));
+    }
+
 
     /**
      * Show the form for creating a new resource.
@@ -39,9 +54,9 @@ class CourseController extends Controller
             'start_date' => 'required|date',
             'end_date' => 'required|date|after_or_equal:start_date',
         ]);
-    
+
         Course::create($validated);
-    
+
         return redirect()->route('datakursus.index')->with('message', 'Course berhasil ditambahkan!');
     }
 
@@ -50,9 +65,8 @@ class CourseController extends Controller
      */
     public function show(Course $course)
     {
-        //
+        return view('user.kursus.detail', compact('course'));
     }
-
     /**
      * Show the form for editing the specified resource.
      */
@@ -75,7 +89,7 @@ class CourseController extends Controller
             'start_date' => 'required|date',
             'end_date' => 'required|date|after_or_equal:start_date',
         ]);
-    
+
         $course->update([
             'title' => $request->title,
             'price' => $request->price,
@@ -85,18 +99,18 @@ class CourseController extends Controller
             'start_date' => $request->start_date,
             'end_date' => $request->end_date,
         ]);
-    
+
         return redirect()->route('datakursus.index')->with('message', 'Data kursus berhasil diupdate.');
     }
-    
+
 
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(Course $course)
-{
-    $course->delete();
+    {
+        $course->delete();
 
-    return redirect()->route('datakursus.index')->with('message', 'Kursus berhasil dihapus.');
-}
+        return redirect()->route('datakursus.index')->with('message', 'Kursus berhasil dihapus.');
+    }
 }

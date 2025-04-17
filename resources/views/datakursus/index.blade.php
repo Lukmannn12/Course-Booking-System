@@ -50,7 +50,7 @@
                                         <td class="border p-2 text-sm">Rp {{ number_format($course->price, 0, ',', '.') }}</td>
                                         <td class="border p-2 text-sm">{{ \Carbon\Carbon::parse($course->start_date)->format('d F Y') }}</td>
                                         <td class="border p-2 text-sm">{{ \Carbon\Carbon::parse($course->end_date)->format('d F Y') }}</td>
-                                        <td class="border p-2 flex justify-center items-center">
+                                        <td class="border p-2 text-center">
                                             <a href="{{ route('datakursus.edit', $course) }}" class="text-blue-500 mr-2">
                                                 <i class="fas fa-edit w-5 h-5"></i>
                                             </a>

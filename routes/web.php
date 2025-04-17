@@ -1,22 +1,21 @@
 <?php
 
 use App\Http\Controllers\CourseController;
+use App\Http\Controllers\EnrollmentController;
 use Illuminate\Support\Facades\Route;
 
-Route::view('/', 'welcome')->name('home');
+Route::get('/', [CourseController::class, 'welcome'])->name('home');
 
-Route::view('dashboard', 'dashboard')
+Route::get('dashboard', [CourseController::class, 'total'])
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
 
     Route::resource('datakursus', CourseController::class)
-    ->parameters(['datakursus' => 'course']) // ✅ rapi dan sesuai model
+    ->parameters(['datakursus' => 'course']) 
     ->middleware(['auth', 'verified']);
     
 
-    Route::view('jadwalkursus', 'jadwalkursus.index')
-    ->middleware(['auth', 'verified'])
-    ->name('jadwalkursus');
+
 
 Route::view('profile', 'profile')
     ->middleware(['auth'])
