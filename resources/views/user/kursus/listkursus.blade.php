@@ -61,43 +61,72 @@
     <h2 class="text-2xl font-bold mb-12 text-center text-gray-800">Apa Kata Mereka?</h2>
 
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 max-w-7xl mx-auto">
-        <!-- Testimoni 1 -->
+        @foreach ($testimonials as $testimonial)
         <div class="bg-white rounded-2xl shadow-md p-6 space-y-4">
-            <p class="text-gray-600 italic">“Kursus ini sangat membantu saya dalam memahami materi yang sebelumnya sulit dipahami. Penjelasannya sangat jelas dan mudah diikuti.”</p>
+            <p class="text-gray-600 italic">“{{ $testimonial->content }}”</p>
             <div class="flex items-center space-x-4">
-                <img src="https://i.pravatar.cc/100?img=1" alt="User 1" class="w-12 h-12 rounded-full">
-                <div>
-                    <p class="font-semibold text-gray-800">Andi Setiawan</p>
-                    <p class="text-sm text-gray-500">Peserta Kursus Web Development</p>
-                </div>
-            </div>
-        </div>
+                <!-- Gambar default placeholder -->
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                </svg>
 
-        <!-- Testimoni 2 -->
-        <div class="bg-white rounded-2xl shadow-md p-6 space-y-4">
-            <p class="text-gray-600 italic">“Saya sangat puas! Belajar jadi lebih fleksibel, bisa diakses kapan saja. Terima kasih atas platform yang luar biasa ini.”</p>
-            <div class="flex items-center space-x-4">
-                <img src="https://i.pravatar.cc/100?img=2" alt="User 2" class="w-12 h-12 rounded-full">
                 <div>
-                    <p class="font-semibold text-gray-800">Rina Marlina</p>
-                    <p class="text-sm text-gray-500">Peserta Kursus UI/UX Design</p>
+                    <p class="font-semibold text-gray-800">{{ $testimonial->username ?? $testimonial->user->name }}</p>
+                    <p class="text-sm text-gray-500">{{ $testimonial->course->title }}</p>
                 </div>
             </div>
         </div>
-
-        <!-- Testimoni 3 -->
-        <div class="bg-white rounded-2xl shadow-md p-6 space-y-4">
-            <p class="text-gray-600 italic">“Materinya lengkap, praktikal, dan langsung bisa diaplikasikan dalam pekerjaan saya. Recommended banget!”</p>
-            <div class="flex items-center space-x-4">
-                <img src="https://i.pravatar.cc/100?img=3" alt="User 3" class="w-12 h-12 rounded-full">
-                <div>
-                    <p class="font-semibold text-gray-800">Dewi Anggraini</p>
-                    <p class="text-sm text-gray-500">Peserta Kursus Data Analysis</p>
-                </div>
-            </div>
-        </div>
+        @endforeach
     </div>
 </section>
+
+
+<!-- FORM TESTIMONI -->
+<div class="mt-8 p-6 bg-white rounded-lg shadow-md max-w-xl mx-auto">
+    <h2 class="text-xl font-semibold mb-4 text-gray-800">Tulis Testimoni Anda</h2>
+
+    @if (session('success'))
+    <div class="mb-4 p-3 bg-green-100 text-green-700 rounded-md">
+        {{ session('success') }}
+    </div>
+    @endif
+
+    <form action="{{ route('testimonials.store') }}" method="POST" class="space-y-4">
+        @csrf
+
+        <!-- Hidden: ID Kursus -->
+        <input type="hidden" name="course_id" value="{{ $course->id }}">
+
+        <!-- Username: Otomatis Anonymous jika guest -->
+        <input type="hidden" name="username" value="Anonymous">
+
+        <!-- Isi Testimoni -->
+        <div>
+            <label for="content" class="block text-sm font-medium text-gray-700">Testimoni</label>
+            <textarea name="content" id="content" rows="4" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500" required></textarea>
+        </div>
+
+        <!-- Rating -->
+        <div>
+            <label for="rating" class="block text-sm font-medium text-gray-700">Rating</label>
+            <select name="rating" id="rating" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
+                <option value="">Pilih Rating</option>
+                @for ($i = 1; $i <= 5; $i++)
+                    <option value="{{ $i }}">{{ $i }} Bintang</option>
+                    @endfor
+            </select>
+        </div>
+
+        <!-- Submit -->
+        <div>
+            <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-2 px-4 rounded-md text-sm font-medium">
+                Kirim Testimoni
+            </button>
+        </div>
+    </form>
+</div>
+
+
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         const alert = document.getElementById('alert');

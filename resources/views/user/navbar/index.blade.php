@@ -19,16 +19,20 @@
                 class="text-sm font-semibold transition-all duration-200 hover:underline hover:underline-offset-8 {{ request()->routeIs('home') ? 'text-blue-600 underline underline-offset-8' : 'text-gray-900' }}">
                 Home
             </a>
-            <a href="/form" class="text-sm font-semibold {{ request()->routeIs('product*') ? 'text-blue-600' : 'text-gray-900' }}">Form Pmesanan</a>
+            @auth
+            <a href="{{ route('history_kelas') }}" class="text-sm font-semibold {{ request()->routeIs('history_kelas') ? 'text-blue-600' : 'text-gray-900' }}">
+                History Kelas
+            </a>
+            @endauth
         </div>
         <div class="hidden lg:flex lg:flex-1 lg:justify-end items-center space-x-4">
-    @auth
-    <span class="text-sm font-semibold text-gray-900">Welcome, {{ auth()->user()->name }}</span>
-    <livewire:logout-button />
-    @else
-    <a href="{{ route('login') }}" class="text-sm font-semibold text-gray-900 hover:bg-gray-50 px-4 py-2 rounded">Log in</a>
-    @endauth
-</div>
+            @auth
+            <span class="text-sm font-semibold text-gray-900">Welcome, {{ auth()->user()->name }}</span>
+            <livewire:logout-button />
+            @else
+            <a href="{{ route('login') }}" class="text-sm font-semibold text-gray-900 hover:bg-gray-50 px-4 py-2 rounded">Log in</a>
+            @endauth
+        </div>
     </nav>
 
     <!-- Mobile Menu -->

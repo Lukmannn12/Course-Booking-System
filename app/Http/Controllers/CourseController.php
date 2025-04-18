@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Course;
+use App\Models\Testimonial;
 use Illuminate\Http\Request;
 
 class CourseController extends Controller
@@ -19,7 +20,9 @@ class CourseController extends Controller
     public function welcome()
     {
         $courses = Course::all();
-        return view('user.kursus.listkursus', compact('courses'));
+        $testimonials = Testimonial::with(['user', 'course'])->latest()->get();
+
+        return view('user.kursus.listkursus', compact('courses', 'testimonials'));
     }
 
     public function total()

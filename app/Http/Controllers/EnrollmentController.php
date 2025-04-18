@@ -17,6 +17,16 @@ class EnrollmentController extends Controller
         return view('dataenrollment.index', compact('enrollments'));
     }
 
+    public function history()
+        {
+            $enrollments = Enrollment::with('course')
+            ->where('user_id', Auth::id())
+            ->latest()
+            ->get();
+
+            return view('user.history.index', compact('enrollments'));
+        }
+
     /**
      * Show the form for creating a new resource.
      */

@@ -55,6 +55,16 @@
                                     <i class="fas fa-check-circle text-green-600 dark:text-green-300"></i>
                                 </div>
                             </div>
+
+                            <div class="bg-white shadow-lg rounded-lg p-6 flex items-center justify-between hover:transform hover:scale-105 hover:shadow-xl transition-all cursor-pointer">
+                                <div>
+                                    <h3 class="text-xl font-semibold text-teal-600">Total Testimonial</h3>
+                                    <p class="text-2xl font-bold text-teal-600 pt-4">{{ $totalTestimonials }}</p>
+                                </div>
+                                <div class="bg-teal-100 dark:bg-teal-600 p-3 rounded-full">
+                                    <i class="fas fa-user-plus text-teal-600 dark:text-teal-300"></i>
+                                </div>
+                            </div>
                         </div>
 
                     </div>

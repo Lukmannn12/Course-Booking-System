@@ -23,5 +23,9 @@ class Course extends Model
     {
         return $this->belongsToMany(User::class, 'enrollments')->withTimestamps();
     }
+    public function testimonials()
+    {
+        return $this->hasMany(Testimonial::class);
+    }
 
 }
